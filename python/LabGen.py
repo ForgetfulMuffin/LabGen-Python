@@ -210,5 +210,5 @@ def getVisited(position): # Renvoie si la zone a deja ande visitee
 # Lancement
 #================
 
-size = input("Veuillez entrer un nombre entier s'il vou plait : ")
+size = input("Veuillez entrer un nombre entier s'il vous plait : ")
 generate()
