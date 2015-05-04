@@ -18,7 +18,8 @@ int main(){
 //===definitions====//
 map * generate(){
   printf("======Generate======\n");
-  map * gameMap = createEmpty();
+  map * gameMap = NULL;
+  createEmpty(&gameMap);
   printf("=Exited createEmpty=\n");
   coord * path = (coord *)malloc((SIZE)*(SIZE)*sizeof(coord));
   printf("=Created empty path=\n");
@@ -42,43 +43,42 @@ map * generate(){
   return gameMap;
 }
 
-map * createEmpty(){
+void createEmpty(map ** emptyMap){
   printf("=====createEmpty====\n");
-  map * emptyMap = (map *)malloc(SIZE*sizeof(area *));
+  * emptyMap = (map *)malloc(SIZE*sizeof(area *));
   printf("===Map allocated====\n");
   for (int k = 0; k < SIZE; k++){
-    emptyMap[k] = (area *)malloc(SIZE*sizeof(area));
+   (* emptyMap)[k] = (area *)malloc(SIZE*sizeof(area));
   }
   printf("===Areas allocated==\n");
   for (int i = 0; i < SIZE; i++){
     printf("======Column %d======\n",i);
     for (int j = 0; j < SIZE; j++){
-      (emptyMap[i][j]).north = 0;
-      (emptyMap[i][j]).south = 0;
-      (emptyMap[i][j]).east = 0;
-      (emptyMap[i][j]).west = 0;
+      ((*emptyMap)[i][j]).north = 0;
+      ((*emptyMap)[i][j]).south = 0;
+      ((*emptyMap)[i][j]).east = 0;
+      ((*emptyMap)[i][j]).west = 0;
     }
     printf("Walls Placed in %d, y\n",i);
   }
   printf("===Empty finished===\n");
-  return emptyMap;
 }
 
 void createMaze(map * gameMap, coord * visiting, int * visited , coord * path, int * pathNum){
 
-  /*  for (int t = *visited; t < SIZE*SIZE; t ++){
-      printf("path.x = %d || ",path[t].x);
-      printf("path.y = %d\n",path[t].y);
-      }*/
-  //  printf("======createMaze====\n");
+  for (int t = *visited; t < SIZE*SIZE; t ++){
+    printf("path.x = %d || ",path[t].x);
+    printf("path.y = %d\n",path[t].y);
+  }
+  printf("======createMaze====\n");
   int chosen = 0;
   int n = 0;
   int s = 0; 
   int e = 0; 
   int w = 0; 
   int dir = 0;
-  //  printf("===Set variables====\n");
-  //  printf(">>>>>>>Coords (%d, %d)\n",visiting->x,visiting->y);
+  printf("===Set variables====\n");
+  printf(">>>>>>>Coords (%d, %d)\n",visiting->x,visiting->y);
 
   if(visiting->x > 0){
     if ((gameMap[visiting->x-1][visiting->y]).north == 0 && (gameMap[visiting->x-1][visiting->y]).south == 0 && (gameMap[visiting->x-1][visiting->y]).east == 0 && (gameMap[visiting->x-1][visiting->y]).west == 0){
@@ -101,8 +101,8 @@ void createMaze(map * gameMap, coord * visiting, int * visited , coord * path, i
     }
   }
 
-  //  printf("-n=%d, s=%d, e=%d, w=%d\n",n,s,e,w);
-  //  printf("=Checked Directions=\n");
+  printf("-n=%d, s=%d, e=%d, w=%d\n",n,s,e,w);
+  printf("=Checked Directions=\n");
   if (n+s+e+w > 0){
     while (chosen == 0){
       dir = (int)(rand()%4);

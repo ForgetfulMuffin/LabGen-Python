@@ -1,4 +1,3 @@
-
 #ifndef LABGEN
 #define LABGEN 1
 
@@ -17,7 +16,7 @@ typedef struct _area area;
 typedef area * map;
 
 map * generate();
-map * createEmpty();
+void createEmpty(map **);
 void createMaze(map *, coord*, int *, coord *, int *);
 void printMap(map *);
 
