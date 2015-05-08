@@ -4,56 +4,60 @@
 
 #include "labGen.h"
 
-#define SIZE 6
+//#define size 6
 
 //======main()======//
 int main(){
+  int tempLab;
+  printf("Please enter size of the labyrinth :"); 
+  scanf("%d", &tempLab);
+  const int labSize = tempLab;
   srand(time(NULL));
   printf("====Program Start===\n");
-  map * test = generate();
-  printMap(test);
+  map * test = generate(labSize);
+  printMap(test, labSize);
   return 0;
 }
 
 //===definitions====//
-map * generate(){
+map * generate(const int size){
   printf("======Generate======\n");
   map * gameMap = NULL;
-  createEmpty(&gameMap);
+  createEmpty(&gameMap, size);
   printf("=Exited createEmpty=\n");
-  coord * path = (coord *)malloc((SIZE)*(SIZE)*sizeof(coord));
+  coord * path = (coord *)malloc((size)*(size)*sizeof(coord));
   printf("=Created empty path=\n");
   int pathNum = 0;
   coord visiting;
-  visiting.x = (int)(rand()%SIZE);
-  visiting.y = (int)(rand()%SIZE);
+  visiting.x = (int)(rand()%size);
+  visiting.y = (int)(rand()%size);
   printf("=Created rand start=\n");
   int visited = 1;
   path[pathNum] = visiting;
-  for (int k = visited; k < SIZE*SIZE; k ++){
+  for (int k = visited; k < size*size; k ++){
     path[k].x = 0;
     path[k].y = 0;
   }
   printf("===Set path start===\n");
-  while (visited < SIZE*SIZE){
-    createMaze(gameMap, &visiting, &visited, path, &pathNum);
+  while (visited < size*size){
+    createMaze(gameMap, &visiting, &visited, path, &pathNum, size);
   }
   printf("===Maze generated===\n");
   printf("=====Path is Free===\n");
   return gameMap;
 }
 
-void createEmpty(map ** emptyMap){
+void createEmpty(map ** emptyMap, const int size){
   printf("=====createEmpty====\n");
-  * emptyMap = (map *)malloc(SIZE*sizeof(area *));
+  * emptyMap = (map *)malloc(size*sizeof(area *));
   printf("===Map allocated====\n");
-  for (int k = 0; k < SIZE; k++){
-   (* emptyMap)[k] = (area *)malloc(SIZE*sizeof(area));
+  for (int k = 0; k < size; k++){
+   (* emptyMap)[k] = (area *)malloc(size*sizeof(area));
   }
   printf("===Areas allocated==\n");
-  for (int i = 0; i < SIZE; i++){
+  for (int i = 0; i < size; i++){
     printf("======Column %d======\n",i);
-    for (int j = 0; j < SIZE; j++){
+    for (int j = 0; j < size; j++){
       ((*emptyMap)[i][j]).north = 0;
       ((*emptyMap)[i][j]).south = 0;
       ((*emptyMap)[i][j]).east = 0;
@@ -64,12 +68,12 @@ void createEmpty(map ** emptyMap){
   printf("===Empty finished===\n");
 }
 
-void createMaze(map * gameMap, coord * visiting, int * visited , coord * path, int * pathNum){
+void createMaze(map * gameMap, coord * visiting, int * visited , coord * path, int * pathNum, const int size){
 
-  for (int t = *visited; t < SIZE*SIZE; t ++){
-    printf("path.x = %d || ",path[t].x);
-    printf("path.y = %d\n",path[t].y);
-  }
+//  for (int t = *visited; t < size*size; t ++){
+//    printf("path.x = %d || ",path[t].x);
+//    printf("path.y = %d\n",path[t].y);
+//  }
   printf("======createMaze====\n");
   int chosen = 0;
   int n = 0;
@@ -85,7 +89,7 @@ void createMaze(map * gameMap, coord * visiting, int * visited , coord * path, i
       n = 1;
     }
   }
-  if(visiting->x < SIZE-1){
+  if(visiting->x < size-1){
     if ((gameMap[visiting->x+1][visiting->y]).north == 0 && (gameMap[visiting->x+1][visiting->y]).south == 0 && (gameMap[visiting->x+1][visiting->y]).east == 0 && (gameMap[visiting->x+1][visiting->y]).west == 0){
       s = 1;
     }
@@ -95,7 +99,7 @@ void createMaze(map * gameMap, coord * visiting, int * visited , coord * path, i
       w = 1;
     }
   }
-  if(visiting->y < SIZE-1){
+  if(visiting->y < size-1){
     if ((gameMap[visiting->x][visiting->y+1]).north == 0 && (gameMap[visiting->x][visiting->y+1]).south == 0 && (gameMap[visiting->x][visiting->y+1]).east == 0 && (gameMap[visiting->x][visiting->y+1]).west == 0){
       e = 1;
     }
@@ -172,9 +176,9 @@ void createMaze(map * gameMap, coord * visiting, int * visited , coord * path, i
   }
 }
 
-void printMap(map * gameMap){
-  for (int i = 0; i < SIZE; i++){
-    for (int j = 0; j < SIZE; j++){
+void printMap(map * gameMap, const int size){
+  for (int i = 0; i < size; i++){
+    for (int j = 0; j < size; j++){
       if (gameMap[i][j].west == 0){
         printf("|");
       }

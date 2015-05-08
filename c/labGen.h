@@ -15,9 +15,9 @@ typedef struct _area area;
 
 typedef area * map;
 
-map * generate();
-void createEmpty(map **);
-void createMaze(map *, coord*, int *, coord *, int *);
-void printMap(map *);
+map * generate(const int);
+void createEmpty(map **,const int);
+void createMaze(map *, coord*, int *, coord *, int *, const int);
+void printMap(map *, const int);
 
 #endif
