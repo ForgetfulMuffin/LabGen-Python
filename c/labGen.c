@@ -12,7 +12,6 @@ int main(){
   printf("Please enter size of the labyrinth :"); 
   scanf("%d", &tempLab);
   const int labSize = tempLab;
-  srand(time(NULL));
   printf("====Program Start===\n");
   map * test = generate(labSize);
   printMap(test, labSize);
@@ -22,6 +21,7 @@ int main(){
 //===definitions====//
 map * generate(const int size){
   printf("======Generate======\n");
+  srand(time(NULL));
   map * gameMap = NULL;
   createEmpty(&gameMap, size);
   printf("=Exited createEmpty=\n");
